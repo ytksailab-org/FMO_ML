@@ -1,8 +1,8 @@
-# 1.  Feature Vectors Based on Amino Acid Descriptors. 
+# 1.  Selection of feature vector 
 
  We considered various types of feature vectors that are broadly divided into two groups: amino acid descriptors and TAPE Transformer. Amino acid descriptors are feature vectors defined for each type of amino acid. We constituted a feature vector x of the PHBH protein by concatenating the feature vectors of the amino acids at the four mutated residues (i.e., V47, W185, L199 and L210). For a feature vector of each amino acid, we considered amino acid descriptors including ST-scale, Z-scale, T-scale, FASGAI, MS-WHIM, ProtFP, VHSE and BLOSUM-based features. On top of that, position-specific score matrix (PSSM) was used as a feature vector to incorporate the evolutionary information from PHBH homologues. Specifically, we constructed PSSM by PSI-BLAST iterative homology search using the wild-type PHBH sequence as a query against the nr database. The homology search was iterated five times, with 200 homologues used to update the PSSM per iteration. This produced a PSSM {s_ij} for each residue i and amino acid j. The PSSM-based feature vector of the PHBH protein was constructed by concatenating the PSSM values of the four mutated residues and their amino acids.
 
-###1.1  Connection of the experimental data with amino acid descriptors
+### 1.1  Connection of the experimental data with amino acid descriptors
 
 Matsushita_PHBH_20230501_22hplc.csv.unix is the experimental data of PHBH assay against 6. The amounts of 6-product were measured with HPLC. First, to connect this experimental data with amino acid descriptors, Matsushita_PHBH_ssf.pl was used as described below.
 
