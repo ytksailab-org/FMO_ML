@@ -38,7 +38,7 @@ for feat in BLOSUM FASGAI MS-WHIM T-scale ST-scale Z-scale VHSE ProtFP ; do
 
 ## 1.2  Feature Vectors Based on TAPE Transformer
 
- In addition to the amino acid descriptors, we considered the feature vectors based on TAPE Transformer which is a representation learning model pre-trained on the Pfam database (denoted as BERT). In addition, we fine-tuned the pre-trained TAPE Transformer using PHBH homologues via a method proposed previously to incorporate the evolutionary information of PHBH (denoted as Evotuned-BERT). 
+In addition to the amino acid descriptors, we considered the feature vectors based on TAPE Transformer which is a representation learning model pre-trained on the Pfam database (denoted as BERT). In addition, we fine-tuned the pre-trained TAPE Transformer using PHBH homologues via a method proposed previously to incorporate the evolutionary information of PHBH (denoted as Evotuned-BERT). 
 
  Matsushita_PHBH_20230501_22hplc.csv was used to connect the experimental data. Matsushita_PHBH_ssf.pl was used in an essentially same procedure.
 
@@ -48,7 +48,7 @@ for feat in bert-base-mean-new bert-EV0.001-ML600-VL0.1-256-16-mean-new ; do
 > done
 ~~~
 
- To evaluate the BERT and Evotuned-BERT, 5-fold nested cross validation were conducted in an essentially same procedure. 
+To evaluate the BERT and Evotuned-BERT, 5-fold nested cross validation were conducted in an essentially same procedure. 
 
 ~~~
 for feat in bert-base-mean-new bert-EV0.001-ML600-VL0.1-256-16-mean-new ; do
@@ -74,7 +74,7 @@ python3 model_construction_svr.py spearman Matsushita_PHBH_20230501_22hplc_bert-
 
 # 3.  Prediction of the whole sequence pattern
 
- By using the model constructed above, machine learning models for the prediction of whole sequence pattern were developed, separately.
+By using the model constructed above, machine learning models for the prediction of whole sequence pattern were developed, separately.
 
 A pair of seqences and feature vectors were calculated by using Matsushita_PHBH_ssf_pred_split.pl as described below. 
 
