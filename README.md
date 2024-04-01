@@ -4,7 +4,7 @@ We considered various types of feature vectors that are broadly divided into two
 
 ## 1.1  Feature Vectors Based on amino acid descriptors
 
- Matsushita_PHBH_20230501_22hplc.csv.unix is the experimental data of PHBH assay against 6. The amounts of 6-product were measured with HPLC. First, to connect this experimental data with amino acid descriptors, Matsushita_PHBH_ssf.pl was used as described below.
+Matsushita_PHBH_20230501_22hplc.csv.unix is the experimental data of PHBH assay against 6. The amounts of 6-product were measured with HPLC. First, to connect this experimental data with amino acid descriptors, Matsushita_PHBH_ssf.pl was used as described below.
 
 ~~~
 for feat in BLOSUM FASGAI MS-WHIM T-scale ST-scale Z-scale VHSE ProtFP ; do
@@ -12,7 +12,7 @@ for feat in BLOSUM FASGAI MS-WHIM T-scale ST-scale Z-scale VHSE ProtFP ; do
 > done
 ~~~
 
- Next, to incorporate the evolutionary information from PHBH homologues, PSSM was used together with amino acids descriptors, as described below.
+Next, to incorporate the evolutionary information from PHBH homologues, PSSM was used together with amino acids descriptors, as described below.
 
 ~~~
 for feat in BLOSUM FASGAI MS-WHIM T-scale ST-scale Z-scale VHSE ProtFP ; do
@@ -20,7 +20,7 @@ for feat in BLOSUM FASGAI MS-WHIM T-scale ST-scale Z-scale VHSE ProtFP ; do
 > done
 ~~~
 
- To select the optimal feature vector, we performed a feature selection procedure using the initial library as a benchmark dataset. For each feature vector, we conducted 5-fold nested cross validation where the hyperparameters of SVM and RBF kernel were optimized in the inner 5-fold cross validation, and the model performance was evaluated in the outer 5-fold cross validation by Spearman’s rank correlation. 
+To select the optimal feature vector, we performed a feature selection procedure using the initial library as a benchmark dataset. For each feature vector, we conducted 5-fold nested cross validation where the hyperparameters of SVM and RBF kernel were optimized in the inner 5-fold cross validation, and the model performance was evaluated in the outer 5-fold cross validation by Spearman’s rank correlation. 
 
 ~~~
 for feat in BLOSUM FASGAI MS-WHIM T-scale ST-scale Z-scale VHSE ProtFP ; do
@@ -34,7 +34,7 @@ for feat in BLOSUM FASGAI MS-WHIM T-scale ST-scale Z-scale VHSE ProtFP ; do
 > done
 ~~~
 
- In this experiment, the combination of BLOSUM with PSSM (denoted as BLOSUM × PSSM) achieved the best performance. 
+In this experiment, the combination of BLOSUM with PSSM (denoted as BLOSUM × PSSM) achieved the best performance. 
 
 ## 1.2  Feature Vectors Based on TAPE Transformer
 
@@ -60,21 +60,21 @@ for feat in bert-base-mean-new bert-EV0.001-ML600-VL0.1-256-16-mean-new ; do
 
 # 2.  Construction of the machine learning model
 
-　By considering the result of benchmark experiment, we decided to construct the machine learning model based on BLOSUM x PSSM. model_construction_svr.py was used for the construction of machine learning model as described below. The information and the accuracy of machine learning model are written in Matsushita_PHBH_20230501_model_con_svr_spearman_22hplc_BLOSUM_PSSM and Matsushita_PHBH_20230501_model_con_svr_spearman_22hplc_BLOSUM_PSSM.log, respectively.
+By considering the result of benchmark experiment, we decided to construct the machine learning model based on BLOSUM x PSSM. model_construction_svr.py was used for the construction of machine learning model as described below. The information and the accuracy of machine learning model are written in Matsushita_PHBH_20230501_model_con_svr_spearman_22hplc_BLOSUM_PSSM and Matsushita_PHBH_20230501_model_con_svr_spearman_22hplc_BLOSUM_PSSM.log, respectively.
 
 ~~~
 python3 model_construction_svr.py spearman Matsushita_PHBH_20230501_22hplc_BLOSUM_PSSM.csv Matsushita_PHBH_20230501_model_con_svr_spearman_22hplc_BLOSUM_PSSM > Matsushita_PHBH_20230501_model_con_svr_spearman_22hplc_BLOSUM_PSSM.log
 ~~~
 
- Machine learning model based on Evotuned-BERT was constructed in an essentially the same procedure.
+Machine learning model based on Evotuned-BERT was constructed in an essentially the same procedure.
 
 ~~~
 python3 model_construction_svr.py spearman Matsushita_PHBH_20230501_22hplc_bert-EV0.001-ML600-VL0.1-256-16-mean-new.csv Matsushita_PHBH_20230501_model_con_svr_spearman_22hplc_bert-EV0.001-ML600-VL0.1-256-16-mean-new > Matsushita_PHBH_20230501_model_con_svr_spearman_22hplc_bert-EV0.001-ML600-VL0.1-256-16-mean-new.log
 ~~~
 
-# 3.  Prediction of the whole sequence pattern
+# 3.  Prediction of the whole sequence space
 
-By using the model constructed above, machine learning models for the prediction of whole sequence pattern were developed, separately.
+By using the model constructed above, machine learning models for the prediction of whole sequence space were developed, separately.
 
 A pair of seqences and feature vectors were calculated by using Matsushita_PHBH_ssf_pred_split.pl as described below. 
 
@@ -88,4 +88,4 @@ model_prediction_svr.py was used for the prediction of the whole sequence patter
 python3 model_prediction_svr.py Matsushita_PHBH_BLOSUM_PSSM_pred_1.csv Matsushita_PHBH_20230501_model_con_svr_spearman_22hplc_BLOSUM_PSSM > Matsushita_PHBH_20230501_model_pred_svr_spearman_22hplc_BLOSUM_PSSM_rank
 ~~~
 
- The prediction of the whole sequence pattern using Evotued-BERT was conducted in an essentially the same procedure.
+The prediction of the whole sequence space using Evotued-BERT was conducted in an essentially the same procedure.
